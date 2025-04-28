@@ -1,0 +1,51 @@
+@import "../../styles/colors";
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  transition: all 0.5s;
+}
+
+.modal {
+  position: fixed;
+  top: 10vh;
+  left: 5%;
+  width: 100rem;
+  background-color: $color-white;
+  border-radius: 9px;
+  padding: 5rem 6rem;
+  box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  transition: all 0.5s;
+  animation: slide-down 300ms ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
+.content {
+  overflow: auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    width: 100rem;
+    left: calc(35% - 20rem);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
