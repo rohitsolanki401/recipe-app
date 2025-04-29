@@ -9,7 +9,10 @@ export default defineConfig({
     loader: 'jsx'
   },
   plugins: [
-    react()
+    [react()],
+    optimizeDeps : {
+    include : ['react-redux']
+    }
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
