@@ -8,9 +8,10 @@ export default defineConfig({
     include: /\.[jt]sx?$/,
     loader: 'jsx'
   },
-  plugins: [
-    react()
-  ],
+  plugins: [react()],
+    optimizeDeps : {
+    include : ['react-redux']
+    },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
