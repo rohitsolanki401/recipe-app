@@ -24,8 +24,8 @@ const RecipesList = () => {
   }, [dispatch]);
 
   const newSearchResults = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * 10;
-    const lastPageIndex = firstPageIndex + 10;
+    const firstPageIndex = (currentPage - 1) * 10;  // starting index of current page
+    const lastPageIndex = firstPageIndex + 10;      // ending index of current page
     return searchResults.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, searchResults]);
 
