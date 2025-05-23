@@ -47,6 +47,21 @@ body {
     "head head"
     "list recipe";
 
+    .recipe-container {
+        grid-area: recipe;
+        background-color: $color-grey-light-1;
+        overflow-y: auto;
+          min-height: 100vh;
+          border-left: 1px solid $color-grey-light-2;
+      }
+    
+      .list-container {
+        grid-area: list;
+        padding: 3rem 0;
+        background-color: #fff;
+        overflow-y: scroll;
+      }
+
   @media only screen and (max-width: $bp-large) {
     max-width: 100%;
     margin: 0;

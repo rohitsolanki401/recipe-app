@@ -26,7 +26,7 @@ const BookmarksList = ({ active }) => {
         )}
         {bookmarks.length !== 0 &&
           bookmarks.map((recipe) => (
-            <RecipeItem key={recipe.id} recipe={recipe} />
+            <RecipeItem key={recipe._id} recipe={recipe} />
           ))}
       </ul>
     </div>

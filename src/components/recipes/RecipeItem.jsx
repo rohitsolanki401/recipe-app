@@ -4,9 +4,12 @@ import Icons from "../../assets/images/icons.svg";
 import classes from "./RecipeItem.module.scss";
 
 const RecipeItem = ({ recipe }) => {
+  console.log('Recipe in RecipeItem:', recipe);
+
   return (
     <li className="preview">
-      <Link to={recipe.id} className={classes["preview__link"]}>
+      <Link to={`/recipe/${recipe._id || recipe.id}`} 
+ className={classes["preview__link"]}>
         <figure className={classes.preview__fig}>
           <img src={recipe.image_url} alt={recipe.title} />
         </figure>

@@ -1,15 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation, useNavigate } from 'react-router-dom';
 
-import { recipeActions } from "../../store/recipe-slice";
-import { deleteRecipe, fetchResults } from "../../store/recipe-actions";
+import { recipeActions } from '../../store/recipe-slice';
+import { deleteRecipe, fetchResults } from '../../store/recipe-actions';
+import { toggleRecipeLike } from '../../store/recipe-actions';
 
-import LoadingSpinner from "../UI/LoadingSpinner";
-import Icons from "../../assets/images/icons.svg";
+import LoadingSpinner from '../UI/LoadingSpinner';
+import Icons from '../../assets/images/icons.svg';
 
-import fracty from "fracty";
-import classes from "./RecipeItemDetails.module.scss";
-import { useState } from "react";
+import fracty from 'fracty';
+import classes from './RecipeItemDetails.module.scss';
+import { useState } from 'react';
+
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
 const RecipeDetails = () => {
   const dispatch = useDispatch();
@@ -41,15 +44,26 @@ const RecipeDetails = () => {
         dispatch(fetchResults(query));
       }
       setIsLoading(false);
-      navigate("../");
+      navigate('../');
     }, 1500);
+  };
+
+  // Likes
+  const likedByUser = useSelector((state) => state.recipe.recipe.likedByUser);
+  const likesCount = useSelector(
+    (state) => state.recipe.recipe.likes?.count || 0
+  );
+
+  const likeHandler = () => {
+    console.log('Like button clicked for recipe ID:', recipe.id);
+    dispatch(toggleRecipeLike(recipe.id));
   };
 
   return (
     <>
       {isLoading && <LoadingSpinner />}
       {!isLoading &&
-        navigation.state === "idle" &&
+        navigation.state === 'idle' &&
         Object.keys(recipe).length !== 0 && (
           <div className={classes.recipe}>
             <figure className={classes.recipe__fig}>
@@ -65,11 +79,11 @@ const RecipeDetails = () => {
 
             <div className={classes.recipe__details}>
               <div className={classes.recipe__info}>
-                <svg className={classes["recipe__info-icon"]}>
+                <svg className={classes['recipe__info-icon']}>
                   <use href={`${Icons}#icon-clock`}></use>
                 </svg>
                 <span
-                  className={`${classes["recipe__info-data"]} ${classes["recipe__info-data--minutes"]}`}
+                  className={`${classes['recipe__info-data']} ${classes['recipe__info-data--minutes']}`}
                 >
                   {recipe.cooking_time}
                 </span>
@@ -77,17 +91,17 @@ const RecipeDetails = () => {
               </div>
 
               <div className={classes.recipe__info}>
-                <svg className={classes["recipe__info-icon"]}>
+                <svg className={classes['recipe__info-icon']}>
                   <use href={`${Icons}#icon-users`}></use>
                 </svg>
-                <span className={classes["recipe__info-data"]}>
+                <span className={classes['recipe__info-data']}>
                   {recipe.servings}
                 </span>
                 <span>servings</span>
 
-                <div className={classes["recipe__info-buttons"]}>
+                <div className={classes['recipe__info-buttons']}>
                   <button
-                    className={`${classes["btn--tiny"]} ${classes["btn--update-servings"]}`}
+                    className={`${classes['btn--tiny']} ${classes['btn--update-servings']}`}
                     onClick={decreaseServingsHandler}
                   >
                     <svg>
@@ -95,7 +109,7 @@ const RecipeDetails = () => {
                     </svg>
                   </button>
                   <button
-                    className={`${classes["btn--tiny"]} ${classes["btn--update-servings"]}`}
+                    className={`${classes['btn--tiny']} ${classes['btn--update-servings']}`}
                     onClick={increaseServingsHandler}
                   >
                     <svg>
@@ -106,8 +120,8 @@ const RecipeDetails = () => {
               </div>
 
               <div
-                className={`${classes["recipe__user-generated"]} ${
-                  recipe.key ? "" : classes.hidden
+                className={`${classes['recipe__user-generated']} ${
+                  recipe.key ? '' : classes.hidden
                 }`}
               >
                 <svg>
@@ -116,58 +130,77 @@ const RecipeDetails = () => {
               </div>
 
               <button
-                className={`${classes["btn--round"]} ${classes["btn--bookmark"]}`}
+                className={`${classes['btn--round']} ${classes['btn--bookmark']}`}
                 onClick={addBookmarkHandler}
               >
                 <svg>
                   <use
                     href={`${Icons}#${
-                      recipe.bookmarked ? "icon-bookmark-fill" : "icon-bookmark"
+                      recipe.bookmarked ? 'icon-bookmark-fill' : 'icon-bookmark'
                     }`}
                   ></use>
                 </svg>
               </button>
 
               <button
-                className={`${classes["btn--round"]} ${
-                  classes["btn--delete"]
-                } ${recipe.key ? "" : classes.hidden}`}
+                className={`${classes['btn--round']} ${
+                  classes['btn--delete']
+                } ${recipe.key ? '' : classes.hidden}`}
                 onClick={deleteRecipeHandler}
               >
                 <svg>
                   <use href={`${Icons}#icon-delete`}></use>
                 </svg>
               </button>
+
+              {/* Likes Functionality */}
+              <button
+                className={`
+    ${classes['btn--round']} 
+    ${classes['btn--like']} 
+    ${likedByUser ? classes.liked : ''}
+  `}
+                onClick={likeHandler}
+              >
+                {likedByUser ? <FaHeart size={36} /> : <FaRegHeart size={36} />}
+                <span className={classes['recipe__likes-count']}>
+                  {likesCount}
+                </span>
+              </button>
             </div>
 
             <div className={classes.recipe__ingredients}>
-              <h2 className={classes["heading--2"]}>Recipe ingredients</h2>
-              <ul className={classes["recipe__ingredient-list"]}>
-                {recipe.ingredients.map((ingr) => (
-                  <li
-                    key={`${recipe.title}${ingr.quantity}${ingr.unit}${ingr.description}`}
-                    className={classes.recipe__ingredient}
-                  >
-                    <svg className={classes.recipe__icon}>
-                      <use href={`${Icons}#icon-check`}></use>
-                    </svg>
-                    <div className={classes.recipe__quantity}>
-                      {ingr.quantity ? fracty(ingr.quantity) : ""}
-                    </div>
-                    <div className={classes.recipe__description}>
-                      <span className={classes.recipe__quantity}>
-                        {ingr.unit}
-                      </span>
-                      {ingr.description}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <h2 className={classes['heading--2']}>Recipe ingredients</h2>
+              {recipe.ingredients && recipe.ingredients.length > 0 ? (
+                <ul className={classes['recipe__ingredient-list']}>
+                  {recipe.ingredients.map((ingr, index) => (
+                    <li
+                      key={`${recipe.title}-${index}-${ingr.description}`}
+                      className={classes.recipe__ingredient}
+                    >
+                      <svg className={classes.recipe__icon}>
+                        <use href={`${Icons}#icon-check`}></use>
+                      </svg>
+                      <div className={classes.recipe__quantity}>
+                        {ingr.quantity ? fracty(ingr.quantity) : ''}
+                      </div>
+                      <div className={classes.recipe__description}>
+                        <span className={classes.recipe__quantity}>
+                          {ingr.unit}
+                        </span>
+                        {ingr.description}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No ingredients available for this recipe.</p>
+              )}
             </div>
 
             <div className={classes.recipe__directions}>
-              <h2 className={classes["heading--2"]}>How to cook it</h2>
-              <p className={classes["recipe__directions-text"]}>
+              <h2 className={classes['heading--2']}>How to cook it</h2>
+              <p className={classes['recipe__directions-text']}>
                 This recipe was carefully designed and tested by
                 <span className={classes.recipe__publisher}>
                   {recipe.publisher}
@@ -175,7 +208,7 @@ const RecipeDetails = () => {
                 . Please check out directions at their website.
               </p>
               <a
-                className={`${classes["btn--small"]} ${classes.recipe__btn}`}
+                className={`${classes['btn--small']} ${classes.recipe__btn}`}
                 href={recipe.source_url}
               >
                 <span>Directions</span>

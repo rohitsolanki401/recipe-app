@@ -16,11 +16,13 @@
     "@mui/material": "^7.0.2",
     "@reduxjs/toolkit": "^2.7.0",
     "fracty": "^1.0.12",
+    "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.1",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^6.30.0"
+    "react-router-dom": "^6.30.0",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

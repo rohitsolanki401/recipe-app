@@ -5,11 +5,11 @@ import RecipesList from "../components/recipes/RecipesList";
 const RecipesPage = () => {
   return (
     <>
-      <RecipesList />
+    <RecipesList />
       <div style={{ gridArea: "recipe", backgroundColor: "#f9f5f3" }}>
         <Outlet />
       </div>
-    </>
+      </>
   );
 };
 
