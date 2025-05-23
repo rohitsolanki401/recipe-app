@@ -1,0 +1,12 @@
+@import "../../styles/colors";
+@import "../../styles/components";
+
+.btn--close-modal {
+  font-family: inherit;
+  color: inherit;
+  font-size: 3.5rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding-bottom: 10px;
+}

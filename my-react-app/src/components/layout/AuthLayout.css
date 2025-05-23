@@ -1,0 +1,8 @@
+/* src/layouts/AuthLayout.css */
+.auth-wrapper {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}

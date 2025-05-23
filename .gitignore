@@ -1,5 +1,5 @@
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,35 +7,38 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Dependency directories
+node_modules/
+backend/node_modules/
+my-react-app/node_modules/
 
-# Editor directories and files
-.vscode/*
+# Build output folders
+dist/
+dist-ssr/
+build/
+backend/dist/
+backend/build/
+my-react-app/dist/
+my-react-app/build/
+
+# Environment files
+.env
+backend/.env
+my-react-app/.env
+
+# IDE/editor folders and files
+.vscode/
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# Node.js modules
-node_modules/
-
-# Build output
-build/
-
-# Environment files
-.env
-
-# IDE/Editor folders
-.vscode/
-.idea/
-
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Misc
+master  # <-- this line looks suspicious; probably remove unless you want to ignore a file/folder named 'master'
