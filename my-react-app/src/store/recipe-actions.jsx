@@ -95,6 +95,10 @@ export const getRecipe = (id, bookmarks) => {
       const responseData = await response.json();
       const raw = responseData.data.recipe;
 
+      if (!raw) {
+        throw new Error('Recipe not found');
+      }
+
       // ——— NEW: declare userId and try to populate it
       let userId = null;
       const token = localStorage.getItem('token');

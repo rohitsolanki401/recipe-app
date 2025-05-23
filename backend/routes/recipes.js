@@ -10,11 +10,11 @@ router.get('/', async (req, res) => {
   try {
     const { search } = req.query;
     let query = {};
-    
+
     if (search) {
       query = { title: { $regex: search, $options: 'i' } };
     }
-    
+
     const recipes = await Recipe.find(query);
     res.status(200).json({
       status: 'success',
@@ -30,17 +30,40 @@ router.get('/', async (req, res) => {
 });
 
 // Get single recipe
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const recipe = await Recipe.findById(req.params.id);
+//     res.status(200).json({
+//       status: 'success',
+//       data: {
+//         recipe,
+//       },
+//     });
+//       } catch (err) {
+//     res.status(404).json({ message: 'Recipe not found' });
+//   }
+// });
+
 router.get('/:id', async (req, res) => {
   try {
+    console.log('Fetching recipe with ID:', req.params.id);
+
     const recipe = await Recipe.findById(req.params.id);
+
+    if (!recipe) {
+      console.log('Recipe not found in DB');
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
     res.status(200).json({
       status: 'success',
       data: {
         recipe,
       },
     });
-      } catch (err) {
-    res.status(404).json({ message: 'Recipe not found' });
+  } catch (err) {
+    console.error('Error in fetching recipe:', err);
+    res.status(500).json({ message: 'Server Error' });
   }
 });
 
@@ -55,7 +78,7 @@ router.post('/', async (req, res) => {
         recipe: newRecipe,
       },
     });
-      } catch (err) {
+  } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
@@ -64,6 +87,6 @@ router.post('/', async (req, res) => {
 router.post('/:id/bookmark', recipeController.toggleBookmark);
 
 // Toggle like
-router.post('/:id/like',protect, recipeController.toggleLike);
+router.post('/:id/like', protect, recipeController.toggleLike);
 
 export default router;
