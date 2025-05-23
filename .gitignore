@@ -1,0 +1,27 @@
+# Node modules (both frontend and backend)
+node_modules/
+backend/node_modules/
+my-react-app/node_modules/
+
+# Build output folders
+backend/dist/
+backend/build/
+my-react-app/dist/
+my-react-app/build/
+
+# Environment variables
+*.env
+backend/.env
+my-react-app/.env
+
+# Logs
+logs/
+*.log
+
+# IDE configs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
