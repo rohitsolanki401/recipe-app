@@ -1,8 +1,0 @@
-/* src/pages/RootLayout.css */
-.app-container {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    height: 100vh;
-}
-
-/* other app‑specific rules here */
